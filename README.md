@@ -1,13 +1,3 @@
-# p5.riso.js
+# p5-RCS (RASTERING and COLOR SEPARATION)
 
-Documentation: https://antiboredom.github.io/p5.riso/
-
-## Notes:
-
-To do:
-- add more dithering options
-  - add dithering options for graphics, or for entire color object (layers)
-- document halftones
-- function to select like colored pixels (magic wand)
-- translate image color spaces
-- document CMYK channel compression function
+Project of using what was done with p5.riso to explore new ways and tools combinations to process images with rasterizing functions and color separation, in an attempt to help graphics designers managing their virtual workspaces.
