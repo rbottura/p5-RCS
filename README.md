@@ -1,5 +1,3 @@
-# Vue 3 + Vite
+# p5-RCS (RASTERING and COLOR SEPARATION)
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+Project of using what was done with p5.riso to explore new ways and tools combinations to process images with rasterizing functions and color separation, in an attempt to help graphics designers managing their virtual workspaces.
