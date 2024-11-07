@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF Exploded View with p5.js WebGL</title>
+    <script
+      src="../lib/p5.min.js"
+      defer
+    ></script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      canvas {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      let pdfData;
+      let images = {},
+        font;
+
+      // Preload the JSON data before setup
+      function preload() {
+        font = loadFont("./fonts/IBMPlexMono-Regular.ttf");
+        loadJSON("extracted_data.json", function (data) {
+          pdfData = data;
+        });
+      }
+
+      function setup() {
+        textFont(font);
+        textSize(32);
+        textAlign(CENTER, CENTER);
+        createCanvas(windowWidth, windowHeight, WEBGL);
+        // noLoop(); // Only render once
+
+        // Load images (after preload is done)
+        pdfData.pages.forEach((page) => {
+          page.images.forEach((imageData) => {
+            // Load the image based on the file path from JSON
+            let img = loadImage(imageData.image_url, () => {
+              images[imageData.xref] = img; // Store image with its reference
+            });
+          });
+        });
+
+        // Set up the camera for a better 3D view
+        // perspective(PI / 3, width / height, 0.1, 1000); // Set perspective projection
+      }
+
+      function draw() {
+        orbitControl()
+        background(125); // Set background to white
+        // rotateY(millis()*0.01)
+        // Move the origin so we can see everything better
+        // translate(-width / 2, -height / 2, -500); // Move origin to center the view
+
+        // Loop through all pages in the PDF
+        pdfData.pages.forEach((page) => {
+          // Render Text (at Z=0)
+          page.text.forEach((textData) => {
+            const { textContent, bbox } = textData; // Renamed `text` to `textContent`
+            const [x0, y0, x1, y1] = bbox;
+
+            // Render the text at the given position (Z = 0 for the first layer)
+            push();
+            translate(x0, y0, 0); // Set position on the X, Y, and Z axes
+            fill(0); // Set text color to black
+            textSize(12); // Set text size
+            textAlign(LEFT, TOP); // Align text from the top-left corner
+            text(textContent, 0, 0, x1, y1); // Draw text at translated position
+            pop();
+          });
+
+          // Render Images (with Z based on index for layering)
+          page.images.forEach((imageData) => {
+            const { xref, bbox } = imageData;
+            const [x0, y0, x1, y1] = bbox;
+
+            // Render the image at the specified position (Z = 10 for images)
+            if (images[xref]) {
+              push();
+              translate(x0, y0, 10); // Move image position with a Z-layer offset
+              tint(255, 124)
+              image(images[xref], 0, 0, x1 - x0, y1 - y0); // Draw the image
+              pop();
+            }
+          });
+        });
+      }
+
+      // Resize the canvas if the window is resized
+      function windowResized() {
+        resizeCanvas(windowWidth, windowHeight);
+      }
+    </script>
+  </body>
+</html>
