@@ -3,7 +3,8 @@
 // Setup function for p5
 function setup() {
     const canvas = createCanvas(400, 400);
-    canvas.parent("sketch-container"); // Attach canvas to a container element
+    canvas.parent("#sketch-container"); // Attach canvas to a container element
+    console.log('ouee')
     background(200);
     textSize(32);
     fill(50);
