@@ -35,8 +35,11 @@ therules[1] = ['B', '+AF-BFB-FA+']; // second rule
 var whereinstring = 0; // where in the L-system are we drawing right now?
 
 // THIS RUNS WHEN WE HIT GO
+let cnv
 function setup() {
-  createCanvas(600, 600);
+  cnv = createCanvas(400, 400);
+  let skContainer = document.querySelector('#sketch-container')
+  cnv.parent(skContainer)
   risoNoStroke();
 
   red = new Riso('red');
@@ -131,9 +134,3 @@ function drawIt(k) {
 
   drawRiso();
 }
-
-
-document.getElementById('exportButton').addEventListener('click', function() {
-    exportRiso();
-});
-

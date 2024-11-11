@@ -1,6 +1,6 @@
 # p5-RCS (RASTERING and COLOR SEPARATION)
 
-Project of using what was done with p5.riso to explore new ways and tools combinations to process images with rasterizing functions and color separation, in an attempt to help graphics designers managing their virtual workspaces.
+Project of using what was done with p5.riso to explore new ways and tools combinations to process images with rasterizing functions and color separation (not only focused on the Risograph printers), in an attempt to help graphics designers managing their virtual workspaces.
 
 ## Project Information Flow
 

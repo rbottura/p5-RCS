@@ -1,9 +1,12 @@
 let blue, red, yellow;
 
+let cnv
 function setup() {
+  cnv = createCanvas(400, 400);
+  let skContainer = document.querySelector('#sketch-container')
+  cnv.parent(skContainer)
   // create an 8.5x11 canvas at 150dpi
   pixelDensity(1);
-  createCanvas(8.5 * 150, 11 * 150);
 
   // create 3 riso layers
   yellow = new Riso('yellow');
@@ -61,8 +64,4 @@ function draw() {
   drawRiso();
 }
 
-
-document.getElementById('exportButton').addEventListener('click', function() {
-    exportRiso();
-});
-
+// exportRiso();

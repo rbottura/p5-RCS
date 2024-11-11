@@ -1,15 +1,21 @@
 let blue;
 let red;
 
+console.log('animation sketch')
+
 var redx = new Array(1000);
 var redy = new Array(1000);
 
 var bluex = new Array(1000);
 var bluey = new Array(1000);
 
+let cnv 
 function setup() {
-  createCanvas(400, 400);
-
+  cnv = createCanvas(400, 400);
+  console.log(document.querySelector('#sketch-container'))
+  let skContainer = document.querySelector('#sketch-container')
+  cnv.parent(skContainer)
+  // cnv.parent('#sketch-container')
   red = new Riso('red');
   for (var i = 0; i < 100; i++) {
     redx[i] = random(width);
@@ -43,10 +49,5 @@ function draw() {
   }
 
   drawRiso();
+  // exportRiso();
 }
-
-
-document.getElementById('exportButton').addEventListener('click', function() {
-    exportRiso();
-});
-

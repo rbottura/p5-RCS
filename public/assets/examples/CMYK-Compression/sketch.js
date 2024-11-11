@@ -3,10 +3,12 @@ let coolLayer;
 let compressChannels = true; // should two CMYK channels go into each Riso layer or nah?
 let capture; // this is the video camera
 
+let cnv
 function setup() {
+  cnv = createCanvas(400, 400);
+  let skContainer = document.querySelector('#sketch-container')
+  cnv.parent(skContainer)
   pixelDensity(1);
-
-  let canvas = createCanvas(640, 480);
 
   // create riso channels
   warmLayer = new Riso('fluorescentpink');
@@ -51,9 +53,3 @@ function draw() {
         28, height-28);
 
 }
-
-
-document.getElementById('exportButton').addEventListener('click', function() {
-    exportRiso();
-});
-

@@ -8,11 +8,14 @@ function preload() {
   img = loadImage("data/no_threat.jpg");
 }
 
+let cnv
 function setup() {
+  cnv = createCanvas(400, 400);
+  let skContainer = document.querySelector('#sketch-container')
+  cnv.parent(skContainer)
   pixelDensity(1);
 
   // set canvas size to the same as image dimensions
-  createCanvas(img.width, img.height);
 
   background(255);
 
@@ -35,8 +38,4 @@ function setup() {
   drawRiso();
 }
 
-
-document.getElementById('exportButton').addEventListener('click', function() {
-    exportRiso();
-});
-
+// exportRiso();

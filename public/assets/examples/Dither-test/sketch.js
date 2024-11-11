@@ -6,9 +6,12 @@ function preload() {
   img = loadImage('rosa.jpg');
 }
 
+let cnv
 function setup() {
+  cnv = createCanvas(400, 400);
+  let skContainer = document.querySelector('#sketch-container')
+  cnv.parent(skContainer)
   pixelDensity(1);
-  createCanvas(11 * 150, 8 * 150); //set for letter size paper
   black = new Riso('black', 11 * 150, 8 * 150); //new riso object
 }
 
@@ -37,11 +40,7 @@ function draw() {
   noLoop();
 }
 
-
-document.getElementById('exportButton').addEventListener('click', function() {
-    exportRiso();
-});
-
+// exportRiso();
 
 //custom function to set dither types with number
 function ditherTypes(x) { 

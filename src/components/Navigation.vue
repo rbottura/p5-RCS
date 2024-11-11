@@ -1,9 +1,10 @@
-<!-- /src/components/Navigation.vue -->
 <template>
-    <nav>
+    <nav class="navigation">
         <ul>
-            <li v-for="(link, index) in links" :key="index" :class="{ active: isActive(link.path) }">
-                <a :href="link.path">{{ link.name }}</a>
+            <li><a href="/">Home</a></li>
+            <li v-for="example in examples" :key="example">
+                <!-- Create a link that navigates to the specific example HTML file -->
+                <a :href="`/assets/examples/${example}/index.html`">{{ formatName(example) }}</a>
             </li>
         </ul>
     </nav>
@@ -13,45 +14,61 @@
 export default {
     data() {
         return {
-            links: [
-                { name: "Animation", path: "/animation.html" },
-                { name: "Animation2", path: "/animation2.html" },
-                { name: "Capture", path: "/capture.html" },
-                { name: "CMYK-Compression", path: "/cmyk-compression.html" },
-                { name: "Color_test", path: "/color_test.html" },
-                { name: "Cutout", path: "/cutout.html" },
-                { name: "Dither", path: "/dither.html" },
-                { name: "Dither-test", path: "/dither-test.html" },
-                { name: "ExtractMapped", path: "/extract-mapped.html" },
-                { name: "Halftone", path: "/halftone.html" },
-                { name: "Image_And_Text", path: "/image-and-text.html" },
-                { name: "Instance_mode", path: "/instance-mode.html" },
-                { name: "Smudge", path: "/smudge.html" },
+            examples: [
+                "Animation",
+                "Animation2",
+                "Capture",
+                "CMYK-Compression",
+                "Color_test",
+                "Cutout",
+                "Dither",
+                "Dither-test",
+                "ExtractMapped",
+                "Halftone",
+                "Image_And_Text",
+                "Instance_mode",
+                "Smudge"
             ],
         };
     },
     methods: {
-        // Check if the link path matches the current path to set the active class
-        isActive(path) {
-            return window.location.pathname === path;
-        },
-    },
+        // Format the name for display if needed (e.g., replace underscores)
+        formatName(name) {
+            return name.replace(/_/g, " ");
+        }
+    }
 };
 </script>
 
 <style scoped>
-nav ul {
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+}
+
+.navigation ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     list-style-type: none;
+    min-width: 90vw;
     padding: 0;
+    gap: 10px;
 }
 
-nav li {
-    display: inline;
-    margin-right: 15px;
+.navigation li {
+    max-width: 100em;
 }
 
-nav li.active a {
+.navigation a {
+    text-decoration: none;
+    color: #007bff;
     font-weight: bold;
-    text-decoration: underline;
+}
+
+.navigation a:hover {
+    color: #0056b3;
 }
 </style>

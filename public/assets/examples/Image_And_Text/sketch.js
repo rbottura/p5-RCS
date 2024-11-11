@@ -5,9 +5,12 @@ function preload() {
   img = loadImage('data/claire.jpg');
 }
 
+let cnv
 function setup() {
+  cnv = createCanvas(400, 400);
+  let skContainer = document.querySelector('#sketch-container')
+  cnv.parent(skContainer)
   pixelDensity(1);
-  createCanvas(8.5 * 72, 11 * 72);
   blue = new Riso('blue');
   red = new Riso('red');
   noLoop();
@@ -41,8 +44,4 @@ function draw() {
   drawRiso();
 }
 
-
-document.getElementById('exportButton').addEventListener('click', function() {
-    exportRiso();
-});
-
+// exportRiso();

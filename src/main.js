@@ -1,8 +1,5 @@
 import { createApp } from 'vue'
 import './style.css'
-import App from './App.vue'
-import Navigation from "./components/Navigation.vue";
+import App from './app.vue'
 
-createApp(App, {
-  components: { Navigation },
-}).mount('#app')
+createApp(App).mount('#app')

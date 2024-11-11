@@ -1,22 +1,45 @@
-// public/assets/examples/example1.js
-let canv
-// Setup function for p5
+let blue;
+let red;
+let capture; // this is the video camera
+
+let cnv
 function setup() {
-  canv = createCanvas(400, 400);
-  canv.parent('#sketch-container') 
-  console.log('zaeza')
-  background(200);
-  textSize(32);
-  fill(50);
-  text('Hello, p5-RCS!', 50, 50);
+  cnv = createCanvas(400, 400);
+  let skContainer = document.querySelector('#sketch-container')
+  cnv.parent(skContainer)
+  
+  pixelDensity(1);
+
+  // create riso channels
+  red = new Riso('red');
+  blue = new Riso('blue');
+
+  // start and hide camera
+  capture = createCapture(VIDEO);
+  capture.size(640, 480);
+  capture.hide();
+
+  frameRate(10);
 }
 
-// Draw function for p5
 function draw() {
-  background(200);
-  // console.log(canvas.parent()); // Attach canvas to a container element
-  text('Hello, p5-RCS!', 50, 50);
-}
+  background(255);
 
-window.setup = setup;
-window.draw = draw;
+  // clear riso layers
+  clearRiso();
+
+  // extract the red ang blue channels
+  let reds = extractRGBChannel(capture, 'red');
+  let blues = extractRGBChannel(capture, 'blue');
+
+  // draw the blue pixels on the blue channel
+  // and red pixels on the red channel
+  blue.image(blues, 0, 0);
+  red.image(reds, 0, 0);
+
+  // remove overlapping pixels
+  blue.cutout(red);
+
+  // draw all riso layers
+  drawRiso();
+}

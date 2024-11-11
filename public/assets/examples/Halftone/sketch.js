@@ -5,9 +5,12 @@ function preload() {
   img = loadImage('data/monkeys.jpg');
 }
 
+let cnv
 function setup() {
+  cnv = createCanvas(400, 400);
+  let skContainer = document.querySelector('#sketch-container')
+  cnv.parent(skContainer)
   pixelDensity(1);
-  createCanvas(img.width, img.height);
 
   pink = new Riso('fluorescentpink');
 }

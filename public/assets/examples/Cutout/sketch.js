@@ -1,8 +1,11 @@
 let black;
 let yellow;
 
+let cnv
 function setup() {
-  createCanvas(600, 600);
+  cnv = createCanvas(400, 400);
+  let skContainer = document.querySelector('#sketch-container')
+  cnv.parent(skContainer)
   yellow = new Riso('yellow');
   black = new Riso('black');
   
@@ -33,8 +36,3 @@ function setup() {
 function draw() {
   
 }
-
-
-document.getElementById('exportButton').addEventListener('click', function() {
-    exportRiso();
-});

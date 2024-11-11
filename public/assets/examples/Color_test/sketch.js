@@ -6,8 +6,11 @@ let blue;
 let yellow;
 let red;
 
+let cnv
 function setup() {
-  createCanvas(600, 600);
+  cnv = createCanvas(400, 400);
+  let skContainer = document.querySelector('#sketch-container')
+  cnv.parent(skContainer)
   pixelDensity(1);
   //blendMode(MULTIPLY);
   noStroke();
@@ -28,12 +31,6 @@ function draw() {
   
 
 }
-
-
-document.getElementById('exportButton').addEventListener('click', function() {
-    exportRiso();
-});
-
 
 function colorGrid(layer, angle) {
   deg = angle*(PI/180);
