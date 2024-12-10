@@ -18,6 +18,7 @@ export default {
                 "Animation",
                 "Animation2",
                 "Capture",
+                "cmyk_halftone",
                 "CMYK-Compression",
                 "Color_test",
                 "Cutout",

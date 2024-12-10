@@ -79,6 +79,9 @@ const RISOCOLORS = [
   { name: "FLUORESCENTYELLOW", color: [255, 233, 22] },
   { name: "FLUORESCENTRED", color: [255, 76, 101] },
   { name: "FLUORESCENTGREEN", color: [68, 214, 44] },
+  { name: "PRINTCYAN", color: [0, 255, 255] },
+  { name: "PRINTMAGENTA", color: [255, 0, 255] },
+  { name: "PRINTYELLOW", color: [255, 255, 0] },
 ];
 
 class RisoColorNode {
@@ -368,9 +371,10 @@ class Riso extends p5.Graphics {
       }
     }
 
-    //this.filter(GRAY);
+    // this.filter(GRAY);
     const p = _getP5Instance();
     let buffer = p.createGraphics(this.width, this.height);
+    buffer.pixelDensity(1)
 
     buffer.loadPixels();
     this.loadPixels();
@@ -479,8 +483,50 @@ function rgb2cmyk(r, g, b) {
 
   k = 1 - k;
 
-  return [c * 255, m * 255, y * 255, k * 255];
+  return [parseInt(c * 255), parseInt(m * 255), parseInt(y * 255), parseInt(k * 255)];
 }
+
+function rgb2cmyk_alt (r,g,b) {
+  var computedC = 0;
+  var computedM = 0;
+  var computedY = 0;
+  var computedK = 0;
+ 
+  //remove spaces from input RGB values, convert to int
+  var r = parseInt( (''+r).replace(/\s/g,''),10 ); 
+  var g = parseInt( (''+g).replace(/\s/g,''),10 ); 
+  var b = parseInt( (''+b).replace(/\s/g,''),10 ); 
+ 
+  if ( r==null || g==null || b==null ||
+      isNaN(r) || isNaN(g)|| isNaN(b) )
+  {
+    alert ('Please enter numeric RGB values!');
+    return;
+  }
+  if (r<0 || g<0 || b<0 || r>255 || g>255 || b>255) {
+    alert ('RGB values must be in the range 0 to 255.');
+    return;
+  }
+ 
+  // BLACK
+  if (r==0 && g==0 && b==0) {
+   computedK = 1;
+   return [0,0,0,1];
+  }
+ 
+  computedC = 1 - (r/255);
+  computedM = 1 - (g/255);
+  computedY = 1 - (b/255);
+ 
+  var minCMY = Math.min(computedC,
+               Math.min(computedM,computedY));
+  computedC = (computedC - minCMY) / (1 - minCMY) ;
+  computedM = (computedM - minCMY) / (1 - minCMY) ;
+  computedY = (computedY - minCMY) / (1 - minCMY) ;
+  computedK = minCMY;
+ 
+  return [computedC * 255 ,computedM* 255,computedY* 255,computedK* 255];
+ }
 
 function extractMappedChannels(img, steps = 0.1, perceptual = false) {
   if (steps < 0.01) steps = 0.01;
@@ -554,6 +600,8 @@ function extractCMYKChannel(img, c) {
     let g = img.pixels[i + 1];
     let b = img.pixels[i + 2];
     let cmyk = rgb2cmyk(r, g, b);
+    // console.log(cmyk)
+    // let cmyk = rgb2cmyk_alt(r, g, b);
     let val = 0;
     desiredCMYKChannels.forEach(function (channelIndex) {
       val += cmyk[channelIndex];
@@ -565,6 +613,7 @@ function extractCMYKChannel(img, c) {
     channel.pixels[i + 3] = img.pixels[i + 3];
   }
   channel.updatePixels();
+  console.log(channel)
   return channel;
 }
 
@@ -606,6 +655,7 @@ function halftoneImage(img, shape, frequency, angle, intensity) {
   rotatedCanvas.imageMode(p.CENTER);
   rotatedCanvas.push();
   rotatedCanvas.translate(img.width, img.height);
+  rotatedCanvas.angleMode(p.DEGREES);
   rotatedCanvas.rotate(-angle);
   rotatedCanvas.image(img, 0, 0);
   rotatedCanvas.pop();
