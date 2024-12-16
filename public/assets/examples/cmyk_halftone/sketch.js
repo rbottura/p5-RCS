@@ -1,4 +1,4 @@
-let img, testpng, testtiff, testjpeg, testpdf; 
+let img, testpng, testtiff, testjpeg, testpdf, currentimage
 
 let justCyan, halftonedCyan, cyanFromRed
 let justMagenta, halftonedMagenta, magentaFromGreen
@@ -6,6 +6,7 @@ let justYellow, halftonedYellow, yellowFromBlue
 let justBlack, halftonedBlack
 
 let justRed, justGreen, justBlue
+let merdiven
 
 function preload() {
   img = loadImage('./data/cmyk_testcolors.png');
@@ -22,7 +23,8 @@ function setup() {
   let skContainer = document.querySelector('#sketch-container')
   cnv.parent(skContainer)
   pixelDensity(1);
-
+  
+  currentimage = testpng
   cyanLayer = new Riso('PRINTCYAN');
   magentaLayer = new Riso('PRINTMAGENTA');
   yellowLayer = new Riso('PRINTYELLOW');
@@ -79,10 +81,10 @@ function draw() {
 
 
 function showSeparatesColors(){
-  cyanLayer.image(justCyan, 0, 0, width/4, height/2)
-  cyanLayer.image(justMagenta, width/4, 0, width/4, height/2);
-  cyanLayer.image(justYellow, 0, height/2, width/4, height/2);
-  cyanLayer.image(justBlack, width/4, height/2, width/4, height/2); 
+  cyanLayer.image(justCyan    ,   0            , 0          , width/4   , height/2)
+  cyanLayer.image(justMagenta ,   width/4      , 0          , width/4   , height/2);
+  cyanLayer.image(justYellow  , 0              , height/2   , width/4   , height/2);
+  cyanLayer.image(justBlack   , width/4        , height/2   , width/4   , height/2); 
 }
 
 function showSeparatesColorsFromRGB(){
